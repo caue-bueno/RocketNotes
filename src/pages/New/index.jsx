@@ -21,7 +21,9 @@ export function New() {
 
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
-  
+
+  const navigate = useNavigate();
+
   function handleAddLink() {
     setLinks(prevState => [...prevState, newLink])
     setNewLink("");
@@ -40,6 +42,19 @@ export function New() {
   }
 
   async function handleNewNote() {
+    if(!title) {
+      return alert("Adicione um título")
+    }
+    
+    if (newLink) {
+      return alert("Adicione um link ou deixe o campo vazio")
+    }
+    
+    if (newTag) {
+      return alert("Adicione a tag ou deixe o campo vazio")
+    }
+
+
     await api.post("/notes", {
       title,
       description,
@@ -48,6 +63,7 @@ export function New() {
     });
 
     alert("Nota criada com sucesso")
+    navigate("/")
   }
 
   return (
@@ -59,13 +75,13 @@ export function New() {
             <h1>Criar nota</h1>
             <Link to="/">Voltar</Link>
           </header>
-          <Input 
-          placeholder="Título"
-          onChange={e => setTitle(e.target.value)}
+          <Input
+            placeholder="Título"
+            onChange={e => setTitle(e.target.value)}
           />
-          <Textarea 
-          placeholder="Observações"
-          onChange={e => setDescription(e.target.value)}
+          <Textarea
+            placeholder="Observações"
+            onChange={e => setDescription(e.target.value)}
           />
           <Section title="Links úteis">
             {
@@ -107,7 +123,10 @@ export function New() {
             </div>
           </Section>
 
-          <Button title="Salvar" />
+          <Button
+            title="Salvar"
+            onClick={handleNewNote}
+          />
         </Form>
       </main>
     </Container>

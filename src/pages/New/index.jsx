@@ -1,13 +1,13 @@
 import { api } from "../../services/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { NoteItem } from "../../components/NoteItem";
 import { Textarea } from "../../components/Textarea";
 import { Section } from "../../components/Section";
 import { Button } from "../../components/Button";
+import { ButtonText } from "../../components/ButtonText";
 
 import { Container, Form } from "./styles";
 
@@ -37,6 +37,7 @@ export function New() {
   function handleDeleteLink(deleted) {
     setLinks(prevState => prevState.filter(link => link !== deleted));
   }
+
   function handleDeleteTag(deleted) {
     setTags(prevState => prevState.filter(tag => tag !== deleted));
   }
@@ -49,7 +50,7 @@ export function New() {
     if (newLink) {
       return alert("Adicione um link ou deixe o campo vazio")
     }
-    
+
     if (newTag) {
       return alert("Adicione a tag ou deixe o campo vazio")
     }
@@ -63,7 +64,11 @@ export function New() {
     });
 
     alert("Nota criada com sucesso")
-    navigate("/")
+    navigate(-1)
+  }
+
+  function handleBack() {
+    navigate(-1);
   }
 
   return (
@@ -73,7 +78,10 @@ export function New() {
         <Form>
           <header>
             <h1>Criar nota</h1>
-            <Link to="/">Voltar</Link>
+            <ButtonText 
+            title="Voltar"
+            onClick={handleBack}
+            />
           </header>
           <Input
             placeholder="Título"

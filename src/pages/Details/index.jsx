@@ -16,7 +16,7 @@ export function Details() {
   const params = useParams();
 
   function handleBack() {
-    navigate("/");
+    navigate(-1);
   }
 
   async function handleDelete() {
